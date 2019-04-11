@@ -1,0 +1,22 @@
+type User @model {
+  id: ID! @isUnique # read-only (managed by Graphcool)
+  createdAt: DateTime! # read-only (managed by Graphcool)
+  updatedAt: DateTime! # read-only (managed by Graphcool)
+  email: String! @isUnique
+  password: String!
+  events: [Event!]! @relation(name: "UserEvents")
+}
+
+type Event @model {
+  id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  createdBy: User! @relation(name: "UserEvents")
+  timezone: String! @defaultValue(value: "utc")
+  title: String!
+  location: String
+  description: String
+  startTime: String!
+  endTime: String!
+  allDay: Boolean! @defaultValue(value: false)
+}
